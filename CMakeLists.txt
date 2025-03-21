@@ -1,21 +1,6 @@
 # First-order language CUDA requires at least CMake 3.18
 cmake_minimum_required(VERSION 3.24)
 
-# Default seletion of CUDA Compute Capabilities.
-# This must be called before project() or cmake sets it to the oldest non-deprecated CC
-# "all" and "all-major" work for Intel and perhaps for ARM with discrete GPUs, but not Tegra and Jetson.
-if(EXISTS "/etc/nv_tegra_release")
-  # The CC list for Tegras and Jetson will require manual updates
-  set(CMAKE_CUDA_ARCHITECTURES "53;62;72;87"
-      CACHE
-      STRING "Which CUDA CCs to support: native, all, all-major or an explicit list delimited by semicolons")
-else()
-  # The CC list for discrete GPUs will require CMake updates
-  set(CMAKE_CUDA_ARCHITECTURES "all-major"
-      CACHE
-      STRING "Which CUDA CCs to support: native, all, all-major or an explicit list delimited by semicolons")
-endif()
-
 project(PopSift VERSION 1.0.0 LANGUAGES CXX CUDA)
 
 # Policy to support CUDA as a first-order language for CMake.
